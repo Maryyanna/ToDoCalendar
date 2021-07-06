@@ -30,6 +30,7 @@ class TaskListViewModel: ObservableObject {
         let task = Task(context: CoreDataManager.shared.viewContext)
         task.title = title
         CoreDataManager.shared.save()
+        print(task)
     }
     
 }
@@ -43,7 +44,7 @@ struct TaskViewModel {
     }
 
     var title: String {
-        return task.title ?? ""
+        return task.title ?? "unspecified title"
     }
     
 }

@@ -7,22 +7,10 @@
 
 import SwiftUI
 
-struct ToDoItem: Identifiable {
-    var id = UUID()
-    var todo: String
-}
-func getToDoIemList() -> Array<ToDoItem> {
-    var finalList = [ToDoItem]()
-    for i in 0..<30 {
-        finalList.append(ToDoItem(todo: "task \(i+1)"))
-    }
-    return finalList
-}
-
 struct ToDoRow: View {
-    var todoItem: ToDoItem
+    var todoItem: TaskViewModel
     var body: some View {
-        Text("\(todoItem.todo)")
+        Text("\(todoItem.title)")
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
@@ -34,18 +22,18 @@ struct ContentView: View {
     let tabBarImageNames = ["person", "sun.min.fill", "lasso", "pencil"]
     let tabBarTitles = ["Settings", "Today", "Recurring", "Add"]
     
-    @State private var taskListVM = TaskListViewModel()
-    var todoItemList = [ToDoItem]()
+    @StateObject private var taskListVM = TaskListViewModel()
+    //var todoItemList = [ToDoItem]()
     
     @State var selectedTabIndex = 1
     @State var shouldShowFullScreenCover = false
 
     func deleteTask(at offsets: IndexSet) {
         offsets.forEach { index in
-            //let task = taskListVM.tasks[index]
-            //taskListVM.delete(task)
+            let task = taskListVM.tasks[index]
+            taskListVM.delete(task)
         }
-        //taskListVM.getAllTasks()
+        taskListVM.getAllTasks()
     }
     
     init() {
@@ -53,7 +41,6 @@ struct ContentView: View {
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
         
-        todoItemList = getToDoIemList()
     }
     
     var body: some View {
@@ -95,7 +82,7 @@ struct ContentView: View {
                                 Text("\(num)")
                             }
                         }
-                            .navigationTitle("Never See It")
+                            .navigationTitle("Will Never See It")
                     }
                     
                 case 1:
@@ -105,14 +92,16 @@ struct ContentView: View {
                             TextField("Enter task name", text: $taskListVM.title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                             Button("Save") {
-                                //taskListVM.save()
-                                //taskListVM.getAllTasks()
+                                taskListVM.save()
+                                taskListVM.getAllTasks()
                             }
                         }
                         Spacer()
                         List{
-                            ForEach(0..<todoItemList.count){index in
-                                ToDoRow(todoItem: todoItemList[index])
+                            ForEach(taskListVM.tasks, id: \.id) { task in
+                                //ToDoRow(todoItem: task)
+                                Text("\(task.title)")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .onDelete(perform: deleteTask)
                         }
@@ -188,20 +177,29 @@ struct ContentView: View {
                     })
                     
                 }
-                //.onDelete(perform: deleteTask)
+                .onDelete(perform: deleteTask)
                 
             }
             
             
         }//VStack
         .onAppear(perform: {
-            //taskListVM.getAllTasks()
+            taskListVM.getAllTasks()
+            Print(taskListVM.tasks.count)
+            print("onAppear")
         })
+
     }
     
+    
+    
+}
 
-    
-    
+extension View {
+    func Print(_ vars: Any...) -> some View {
+        for v in vars { print(v) }
+        return EmptyView()
+    }
 }
 
 

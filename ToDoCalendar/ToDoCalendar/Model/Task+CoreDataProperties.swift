@@ -13,7 +13,9 @@ import CoreData
 extension Task {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Task> {
-        return NSFetchRequest<Task>(entityName: "ToDoListItem")
+        var fetchRequest = NSFetchRequest<Task>(entityName:"Task");
+        fetchRequest.returnsObjectsAsFaults = false
+        return fetchRequest//NSFetchRequest<Task>(entityName: "Task")
     }
 
     @NSManaged public var id: UUID?
@@ -24,6 +26,7 @@ extension Task {
     @NSManaged public var title: String?
     @NSManaged public var content: String?
     @NSManaged public var dueDate: Date?
+    @NSManaged public var assignedDate: Date?
 }
 
 extension Task : Identifiable {
