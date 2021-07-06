@@ -30,16 +30,24 @@ struct ToDoRow: View {
 
 struct ContentView: View {
     
-    @State var selectedTabIndex = 1
-    @State var shouldShowFullScreenCover = false
-    
-    
     //tabBarImageNames come from SF Symbols
     let tabBarImageNames = ["person", "sun.min.fill", "lasso", "pencil"]
     let tabBarTitles = ["Settings", "Today", "Recurring", "Add"]
     
+    @State private var taskListVM = TaskListViewModel()
     var todoItemList = [ToDoItem]()
+    
+    @State var selectedTabIndex = 1
+    @State var shouldShowFullScreenCover = false
 
+    func deleteTask(at offsets: IndexSet) {
+        offsets.forEach { index in
+            //let task = taskListVM.tasks[index]
+            //taskListVM.delete(task)
+        }
+        //taskListVM.getAllTasks()
+    }
+    
     init() {
         //there is a bug in XCode 12 that makes all nav and tab bars to appear yellow
         UITabBar.appearance().barTintColor = .systemBackground
@@ -91,11 +99,22 @@ struct ContentView: View {
                     }
                     
                 case 1:
-                    NavigationView {
-                        List {
-                            ForEach(0..<todoItemList.count) { i in
-                                ToDoRow(todoItem: todoItemList[i])
+                    //NavigationView
+                    VStack{
+                        HStack {
+                            TextField("Enter task name", text: $taskListVM.title)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                            Button("Save") {
+                                //taskListVM.save()
+                                //taskListVM.getAllTasks()
                             }
+                        }
+                        Spacer()
+                        List{
+                            ForEach(0..<todoItemList.count){index in
+                                ToDoRow(todoItem: todoItemList[index])
+                            }
+                            .onDelete(perform: deleteTask)
                         }
                             
                             .font(.system(size: 16, weight: .light))
@@ -128,8 +147,8 @@ struct ContentView: View {
                     }
                 }
                 
-            }
-            .padding(.leading, 12)
+            }//ZStack
+            .padding()
             
             //Spacer()
             Divider()
@@ -169,10 +188,15 @@ struct ContentView: View {
                     })
                     
                 }
+                //.onDelete(perform: deleteTask)
+                
             }
             
             
-        }
+        }//VStack
+        .onAppear(perform: {
+            //taskListVM.getAllTasks()
+        })
     }
     
 

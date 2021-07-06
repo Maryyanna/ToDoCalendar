@@ -3,16 +3,18 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="ToDoListItem" representedClassName="ToDoListItem" syncable="YES">
+    <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="createTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="tags" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="ToDoListItem" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Task" positionX="-63" positionY="-18" width="128" height="163"/>
     </elements>
 </model>
