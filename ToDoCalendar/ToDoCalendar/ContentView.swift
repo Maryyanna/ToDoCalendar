@@ -18,23 +18,14 @@ struct ToDoRow: View {
 
 struct ContentView: View {
     
+    @State private var value : CGFloat?
+    
     //tabBarImageNames come from SF Symbols
     let tabBarImageNames = ["person", "sun.min.fill", "lasso", "pencil"]
     let tabBarTitles = ["Settings", "Today", "Recurring", "Add"]
     
-    @StateObject private var taskListVM = TaskListViewModel()
-    //var todoItemList = [ToDoItem]()
-    
     @State var selectedTabIndex = 1
     @State var shouldShowFullScreenCover = false
-
-    func deleteTask(at offsets: IndexSet) {
-        offsets.forEach { index in
-            let task = taskListVM.tasks[index]
-            taskListVM.delete(task)
-        }
-        taskListVM.getAllTasks()
-    }
     
     init() {
         //there is a bug in XCode 12 that makes all nav and tab bars to appear yellow
@@ -84,40 +75,8 @@ struct ContentView: View {
                         }
                             .navigationTitle("Will Never See It")
                     }
-                    
-                case 1:
-                    //NavigationView
-                    VStack{
-                        HStack {
-                            TextField("Enter task name", text: $taskListVM.title)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            Button("Save") {
-                                taskListVM.save()
-                                taskListVM.getAllTasks()
-                            }
-                        }
-                        Spacer()
-                        List{
-                            ForEach(taskListVM.tasks, id: \.id) { task in
-                                //ToDoRow(todoItem: task)
-                                Text("\(task.title)")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            .onDelete(perform: deleteTask)
-                        }
-                            
-                            .font(.system(size: 16, weight: .light))
-                            //.navigationTitle(tabBarTitles[selectedTabIndex])
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .principal) {
-                                    HStack {
-                                        Image(systemName: tabBarImageNames[selectedTabIndex])
-                                        Text("\(tabBarTitles[selectedTabIndex])").font(.headline)
-                                    }
-                                }
-                            }
-                    }
+                
+                case 1: TasksForADay()
                 
                 case 2:
                     ScrollView {
@@ -177,16 +136,12 @@ struct ContentView: View {
                     })
                     
                 }
-                .onDelete(perform: deleteTask)
                 
             }
             
             
         }//VStack
         .onAppear(perform: {
-            taskListVM.getAllTasks()
-            Print(taskListVM.tasks.count)
-            print("onAppear")
         })
 
     }
@@ -208,3 +163,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+

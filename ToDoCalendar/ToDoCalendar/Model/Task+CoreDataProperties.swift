@@ -27,6 +27,10 @@ extension Task {
     @NSManaged public var content: String?
     @NSManaged public var dueDate: Date?
     @NSManaged public var assignedDate: Date?
+    @NSManaged public var urgent: NSNumber?
+    @NSManaged public var important: NSNumber?
+    @NSManaged public var parentId: UUID?
+    
 }
 
 extension Task : Identifiable {

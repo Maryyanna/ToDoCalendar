@@ -18,6 +18,7 @@
 		E07F64772694A33C00513016 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07F64752694A33C00513016 /* Task+CoreDataProperties.swift */; };
 		E07F64802694A54800513016 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07F647F2694A54800513016 /* CoreDataManager.swift */; };
 		E07F64862694A7C300513016 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07F64852694A7C300513016 /* TaskListViewModel.swift */; };
+		E09C2FCB2696318400A955EA /* TasksForADayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09C2FCA2696318400A955EA /* TasksForADayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E07F64752694A33C00513016 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E07F647F2694A54800513016 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E07F64852694A7C300513016 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
+		E09C2FCA2696318400A955EA /* TasksForADayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksForADayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				E07F647B2694A35100513016 /* Model */,
 				E07F64842694A77D00513016 /* ViewModel */,
+				E09C2FC92696314900A955EA /* Views */,
 				E0768066269403A500793677 /* ToDoCalendarApp.swift */,
 				E0768068269403A500793677 /* ContentView.swift */,
 				E076806A269403A700793677 /* Assets.xcassets */,
@@ -159,6 +162,14 @@
 				E07F64852694A7C300513016 /* TaskListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E09C2FC92696314900A955EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E09C2FCA2696318400A955EA /* TasksForADayView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E09C2FCB2696318400A955EA /* TasksForADayView.swift in Sources */,
 				E0768073269403A700793677 /* ToDoCalendar.xcdatamodeld in Sources */,
 				E0768069269403A500793677 /* ContentView.swift in Sources */,
 				E07F64762694A33C00513016 /* Task+CoreDataClass.swift in Sources */,

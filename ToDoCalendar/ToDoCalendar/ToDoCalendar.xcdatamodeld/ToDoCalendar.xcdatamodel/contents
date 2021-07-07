@@ -9,13 +9,16 @@
         <attribute name="createTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="important" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="parentId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="tags" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="urgent" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
     </entity>
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="Task" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Task" positionX="-63" positionY="-18" width="128" height="223"/>
     </elements>
 </model>
