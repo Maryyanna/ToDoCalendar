@@ -19,6 +19,7 @@ extension Task {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var finishTimestamp: Date?
     @NSManaged public var createTimestamp: Date?
     @NSManaged public var modifiedTimestamp: Date?
     @NSManaged public var tags: String?

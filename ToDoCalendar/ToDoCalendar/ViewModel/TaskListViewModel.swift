@@ -47,4 +47,20 @@ struct TaskViewModel {
         return task.title ?? "unspecified title"
     }
     
+    var finished: Bool {
+        if task.finishTimestamp != nil { return true }
+        return false
+    }
+    
+    func changeFinishStatus() {
+        if task.finishTimestamp != nil {
+            task.finishTimestamp = nil
+        }
+        else {
+            task.finishTimestamp = Date()
+        }
+        CoreDataManager.shared.save()
+        print("changeFinishStatus")
+    }
+    
 }

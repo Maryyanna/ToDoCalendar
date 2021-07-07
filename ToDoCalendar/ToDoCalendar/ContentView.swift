@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct ToDoRow: View {
-    var todoItem: TaskViewModel
-    var body: some View {
-        Text("\(todoItem.title)")
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-
 struct ContentView: View {
     
     @State private var value : CGFloat?
@@ -145,11 +136,11 @@ extension View {
     }
 }
 
-
+#if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
-
+#endif
 

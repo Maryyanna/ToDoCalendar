@@ -8,6 +8,37 @@
 import Foundation
 import SwiftUI
 
+struct ToDoRow: View {
+    var todoItem: TaskViewModel
+    
+    @State var taskFinished : Bool = false
+    
+    var body: some View {
+        HStack{
+            if taskFinished {
+                Text("\(todoItem.title)")
+                    .strikethrough()
+            }
+            else {
+                Text("\(todoItem.title)") 
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .onAppear(perform: {
+            taskFinished = todoItem.finished
+        })
+        .onTapGesture {
+            todoItem.changeFinishStatus()
+            print("clicked task \(todoItem.title)")
+            taskFinished = todoItem.finished
+        }
+        
+            
+    }
+    
+}
+
+
 struct TasksForADay: View {
     
     let iconName : String = "sun.min.fill"
@@ -124,9 +155,11 @@ struct TasksForADay: View {
 
 }
 
-
+//#if DEBUG
 //struct TasksForADay_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TasksForADay(selectedDate: nil)
 //    }
 //}
+//#endif
+
