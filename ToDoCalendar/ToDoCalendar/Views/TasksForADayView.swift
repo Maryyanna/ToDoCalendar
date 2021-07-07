@@ -10,25 +10,37 @@ import SwiftUI
 
 struct TasksForADay: View {
     
-    let iconName : String
-    let viewTitle : String
-    
-    @State var selectedDate : Date?
+    let iconName : String = "sun.min.fill"
+    @State var viewTitle : String = ""
+    @Binding var tasksForADayDate : Date
     @State private var value : CGFloat? //this is for keyboard management
     
     @StateObject private var taskListVM = TaskListViewModel()
     
     @State var newTaskString = ""
     
-    init() {
-        //there is a bug in XCode 12 that makes all nav and tab bars to appear yellow
-        UINavigationBar.appearance().barTintColor = .systemBackground
-        
-        self.iconName = "sun.min.fill"
-        self.viewTitle = "Today"
-        
+    func setTitle() {
+        print("TasksForADay setTitle tasksForADayDate \(String(describing: self.tasksForADayDate)) title \(String(describing: viewTitle))")
+        let thisDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: tasksForADayDate )!
+        let today = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, d MMM y"
+        viewTitle = dateFormatter.string(from: tasksForADayDate )
+        if (thisDate == today) {
+            viewTitle = "Today"
+        }
+        else if (thisDate == tomorrow) {
+            viewTitle = "Tomorrow"
+        }
+        else if (thisDate == yesterday) {
+           viewTitle = "Yesterday"
+        }
+        print("TasksForADay setTitle end selectedDate \(String(describing: tasksForADayDate)) title \(String(describing: self.viewTitle))")
         
     }
+    
     
     func deleteTask(at offsets: IndexSet) {
         offsets.forEach { index in
@@ -51,10 +63,14 @@ struct TasksForADay: View {
                     .keyboardType(.default)
                 //.modifier(TextFieldClearButton(text: "f"))
                 Button("Save") {
-                    taskListVM.title = newTaskString
-                    taskListVM.save()
-                    taskListVM.getAllTasks()
-                    newTaskString = ""
+                    //do not save empty string
+                    if newTaskString.count > 0 {
+                        taskListVM.title = newTaskString
+                        taskListVM.save()
+                        taskListVM.getAllTasks()
+                        newTaskString = ""
+                    }
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
                 }
             }
             Spacer()
@@ -71,6 +87,7 @@ struct TasksForADay: View {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
         }
         .onAppear(perform: {
+            setTitle()
             //get dat from coreData
             taskListVM.getAllTasks()
             //for keyboard handles
@@ -107,16 +124,9 @@ struct TasksForADay: View {
 
 }
 
-// extension for keyboard to dismiss
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
 
-
-struct TasksForADay_Previews: PreviewProvider {
-    static var previews: some View {
-        TasksForADay()
-    }
-}
+//struct TasksForADay_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TasksForADay(selectedDate: nil)
+//    }
+//}

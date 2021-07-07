@@ -22,32 +22,20 @@ struct ContentView: View {
     
     //tabBarImageNames come from SF Symbols
     let tabBarImageNames = ["person", "sun.min.fill", "lasso", "pencil"]
-    let tabBarTitles = ["Settings", "Today", "Recurring", "Add"]
+    let tabBarTitles = ["Settings", "", "Recurring", "Add"]
     
     @State var selectedTabIndex = 1
     @State var shouldShowFullScreenCover = false
+    
+    @State var tasksForADayDate = Calendar.current.date(byAdding: .day, value: 10, to: Date())! //: Date = Date()
     
     init() {
         //there is a bug in XCode 12 that makes all nav and tab bars to appear yellow
         UITabBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().barTintColor = .systemBackground
-        
     }
     
     var body: some View {
-        // //native Tab View
-        //TabView {
-        //    Text("First")
-        //        .tabItem {
-        //            Image(systemName: "person")
-        //            Text("First")
-        //        }
-        //    Text("Second")
-        //        .tabItem {
-        //            Image(systemName: "gear")
-        //            Text("Second")
-        //        }
-        //}
         
         VStack(spacing: 0) {
             
@@ -76,7 +64,7 @@ struct ContentView: View {
                             .navigationTitle("Will Never See It")
                     }
                 
-                case 1: TasksForADay()
+                case 1: TasksForADay(tasksForADayDate: $tasksForADayDate)
                 
                 case 2:
                     ScrollView {
@@ -139,9 +127,9 @@ struct ContentView: View {
                 
             }
             
-            
         }//VStack
         .onAppear(perform: {
+            tasksForADayDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         })
 
     }
